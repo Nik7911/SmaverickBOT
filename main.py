@@ -61,7 +61,6 @@ class BOT:
 
             @client.on(events.CallbackQuery())
             async def callbackQuery(e):
-                print(self.flagDeleteVoip)
                 try:
                     if e.data == b"channelUsername":
                         self.Getter = 0
@@ -230,7 +229,9 @@ class BOT:
     async def VoipPassword(self, e, client):
         try:
             await self.temp_client.sign_in(phone=self.Number, password=e.text)
-            Numbers[self.Number] = StringSession.save(self.temp_client.session)
+            self.ArchivedVoips[self.Number] = StringSession.save(self.temp_client.session)
+            with open("ArchivioVoips.json", "w") as file:
+                json.dump(self.ArchivedVoips, file)
             self.Number = None
             self.Getter = None
             await e.respond("Voip Aggiunto")
