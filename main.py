@@ -1,9 +1,9 @@
 from telethon.sync import TelegramClient, events, Button
 from telethon.tl.types import Channel, User, PeerChat, PeerChannel, DialogPeer
 from telethon.tl.functions.users import GetFullUserRequest
+from telethon.tl.functions.auth import CheckPasswordRequest
 from telethon.tl.types import InputPeerChat
 from telethon.errors import SessionPasswordNeededError,PhoneNumberFloodError
-from telethon.tl.functions.auth import CheckPasswordRequest
 from credentials import Users, Numbers
 import asyncio
 import json
@@ -32,11 +32,9 @@ class BOT:
             self.ArchivedVoips = js
 
     async def start(self):
-        a:TelegramClient = TelegramClient("BOT", Users[0]["API_ID"], Users[0]["API_HASH"])
-        print(a.is_connected())
-        async with TelegramClient("BOT", Users[0]["API_ID"], Users[0]["API_HASH"]) as client:
-            print("...SmaverickBOT Started...")
 
+	async with TelegramClient("BOT", Users[0]["API_ID"], Users[0]["API_HASH"]) as client:
+            print("...SmaverickBOT Started...")
             @client.on(events.NewMessage)
             async def handler(e):
 
@@ -241,7 +239,7 @@ class BOT:
 
         except CheckPasswordRequest as exception:
             await e.respond("Password non corretta!")
-            self.Getter = None
+            self.getter = None
 
         except Exception as exception:
             await e.respond("Errore")
